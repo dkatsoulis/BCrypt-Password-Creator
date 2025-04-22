@@ -25,7 +25,7 @@ export const passwordGenerationSchema = z.object({
     lowercase: z.boolean().default(true),
     numbers: z.boolean().default(true),
     special: z.boolean().default(true),
-    easyToRead: z.boolean().default(false),
+    easyToRead: z.boolean().default(true),
   }),
 });
 

@@ -33,7 +33,7 @@ export function PasswordGenerator() {
         lowercase: true,
         numbers: true,
         special: true,
-        easyToRead: false,
+        easyToRead: true,
       },
     },
   });
