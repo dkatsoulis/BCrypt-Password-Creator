@@ -14,12 +14,23 @@ function generateRandomPassword(
     lowercase: boolean;
     numbers: boolean;
     special: boolean;
+    easyToRead: boolean;
   }
 ): string {
-  const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
-  const numberChars = "0123456789";
-  const specialChars = "!@#$%^&*()_-+=<>?";
+  // Define character sets
+  let uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+  let numberChars = "0123456789";
+  let specialChars = "!@#$%^&*()_-+=<>?";
+
+  // Apply "easy to read" modifications if selected
+  if (options.easyToRead) {
+    // Remove confusing characters like 0/O, 1/l/I, etc.
+    uppercaseChars = "ABCDEFGHJKLMNPQRSTUVWXYZ"; // removed I, O
+    lowercaseChars = "abcdefghjkmnpqrstuvwxyz"; // removed l, o, i
+    numberChars = "23456789"; // removed 0, 1
+    specialChars = "!@#$%^&*()_-+="; // removed confusing symbols like <>?
+  }
 
   let availableChars = "";
   if (options.uppercase) availableChars += uppercaseChars;

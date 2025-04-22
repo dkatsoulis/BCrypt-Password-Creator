@@ -9,11 +9,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { PasswordResultItem } from "./PasswordResultItem";
 import { generatePasswords, downloadAsCSV, downloadAsText, copyAllPasswords } from "@/lib/utils/password";
 import { passwordGenerationSchema, type GeneratedPassword } from "@shared/schema";
 import { useMutation } from "@tanstack/react-query";
-import { RotateCw, Download, Copy } from "lucide-react";
+import { RotateCw, Download, Copy, HelpCircle } from "lucide-react";
 
 type FormData = z.infer<typeof passwordGenerationSchema>;
 
@@ -32,6 +33,7 @@ export function PasswordGenerator() {
         lowercase: true,
         numbers: true,
         special: true,
+        easyToRead: false,
       },
     },
   });
@@ -185,7 +187,7 @@ export function PasswordGenerator() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
             <div className="col-span-1">
               <div className="flex items-center">
                 <Checkbox
@@ -236,6 +238,30 @@ export function PasswordGenerator() {
                 <Label htmlFor="special" className="ml-2 block text-sm text-gray-700">
                   Special Chars (!@#$)
                 </Label>
+              </div>
+            </div>
+            <div className="col-span-1">
+              <div className="flex items-center">
+                <Checkbox
+                  id="easyToRead"
+                  checked={watchOptions.easyToRead}
+                  onCheckedChange={(checked) => setValue("options.easyToRead", checked === true)}
+                  className="h-4 w-4 text-primary focus:ring-primary rounded"
+                />
+                <Label htmlFor="easyToRead" className="ml-2 block text-sm text-gray-700">
+                  Easy to Read
+                </Label>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-6 w-6 p-0 ml-1">
+                      <HelpCircle className="h-4 w-4 text-gray-400" />
+                      <span className="sr-only">Easy to read info</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <p>Removes similar-looking characters (1, l, I, 0, O) to make passwords easier to read and type correctly.</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
             </div>
           </div>
